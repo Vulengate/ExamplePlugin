@@ -6,12 +6,16 @@ import com.github.cozyplugins.cozylibrary.command.command.command.ProgrammableCo
 import com.github.cozyplugins.cozylibrary.command.datatype.CommandStatus;
 import com.github.cozyplugins.cozylibrary.placeholder.Placeholder;
 import com.github.cozyplugins.cozylibrary.placeholder.PlaceholderManager;
+import com.github.squishylib.configuration.Configuration;
+import com.github.squishylib.configuration.implementation.YamlConfiguration;
 import com.github.vulengate.exampleplugin.command.TestCommand;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class ExamplePlugin extends CozyPlugin<ExamplePluginLoader> {
+
+    private Configuration config;
 
     public ExamplePlugin(@NotNull ExamplePluginLoader plugin) {
         super(plugin);
@@ -32,6 +36,16 @@ public class ExamplePlugin extends CozyPlugin<ExamplePluginLoader> {
     @Override
     public void onEnable() {
 
+        // Load the config file.
+        this.config = new YamlConfiguration(
+                this.getPlugin().getDataFolder(),
+                "config.yml"
+        );
+        this.config.load();
+
+        // Example of running a task:
+        ExampleTask task = new ExampleTask();
+        task.run();
     }
 
     @Override
